@@ -1,0 +1,14 @@
+---
+- name: Update application code
+  git: 
+    repo: "{{wordpress_git_repo}}"
+    version: "{{wordpress_git_branch}}"
+    dest: "{{wordpress_deploy_dir}}"
+    accept_hostkey: yes 
+  notify:
+    - restart apache
+
+- name: create wp-config.php
+  template: 
+    src: wp-config.php.j2 
+    dest: "{{wordpress_deploy_dir}}/wp-config.php"

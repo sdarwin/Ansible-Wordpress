@@ -1,0 +1,44 @@
+---
+default_wordpress_packages_general:
+  - htop
+  - mlocate
+  - git-core
+  - dpkg-dev
+  - wget
+  - net-tools
+  - python-passlib
+  - python-pip
+  
+default_wordpress_packages_apache:
+  - apache2
+  - dpkg-dev
+  - php
+  - libapache2-mod-php 
+  - php-mcrypt
+  - php-mysql
+  - php-gd
+  - php-dev
+  - php-curl
+  - php-cli
+  - php-json
+  - php-mbstring
+  - php-apcu
+  - ssl-cert
+  
+default_wordpress_packages_mysql:
+  - mysql-server
+  - python-dev
+  - libmysqlclient-dev
+  - python-mysqldb
+  
+default_wordpress_packages_exim: 
+    - exim4
+
+default_wordpress_users:
+  web: www-data
+default_wordpress_mysql_service: mysql
+default_wordpress_mysql_path: /etc/mysql/conf.d
+default_wordpress_exim_service: exim4
+default_wordpress_exim_config_file: /etc/exim4/update-exim4.conf.conf
+
+default_wordpress_apache_service: apache2

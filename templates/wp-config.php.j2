@@ -1,0 +1,98 @@
+<?php
+/**
+ * The base configurations of the WordPress.
+ *
+ * This file has the following configurations: MySQL settings, Table Prefix,
+ * Secret Keys, WordPress Language, and ABSPATH. You can find more information by
+ * visiting {@link http://codex.wordpress.org/Editing_wp-config.php Editing
+ * wp-config.php} Codex page. You can get the MySQL settings from your web host.
+ *
+ * This file is used by the wp-config.php creation script during the
+ * installation. You don't have to use the web site, you can just copy this file
+ * to "wp-config.php" and fill in the values.
+ *
+ * @package WordPress
+ */
+{% if wordpress_home is defined %}
+define('WP_HOME','{{ wordpress_home }}');
+{% endif %}
+{% if wordpress_wpsiteurl is defined %}
+define('WP_SITEURL','{{ wordpress_wpsiteurl }}');
+{% endif %}
+
+/** if SSL, set these: */
+{% if wordpress_enable_ssl == "true" %}
+define('FORCE_SSL_ADMIN', true);
+$_SERVER['HTTPS']='on';
+{% endif %}
+
+// ** MySQL settings - You can get this info from your web host ** //
+/** The name of the database for WordPress */
+define('DB_NAME', '{{ wordpress_database_name }}');
+
+/** MySQL database username */
+define('DB_USER', '{{ wordpress_database_username }}');
+
+/** MySQL database password */
+define('DB_PASSWORD', '{{ wordpress_database_password }}');
+
+/** MySQL hostname */
+define('DB_HOST', '{{ wordpress_database_host }}');
+
+/** Database Charset to use in creating database tables. */
+define('DB_CHARSET', 'utf8');
+
+/** The Database Collate type. Don't change this if in doubt. */
+define('DB_COLLATE', '');
+
+
+/**#@+
+ * Authentication Unique Keys.
+ *
+ * Change these to different unique phrases!
+ * You can generate these using the {@link http://api.wordpress.org/secret-key/1.1/ WordPress.org secret-key service}
+ *
+ * @since 2.6.0
+ */
+define('AUTH_KEY',         'ZZ4&#+Q[o-+R^%>7iYt+gQ|-](s%`-.p4l$G`G4B&SWrh-eEq&IZr|2YINJT/dU@');
+define('SECURE_AUTH_KEY',  'xrts2:`jrX#9_)DLhJS_OO6.rC|W6 H^bThn }n#|/RM7Sqo2A4Cz>#-wW_xA`r$');
+define('LOGGED_IN_KEY',    '0!-7#Y+/8++UK,rZHk8]gs|3<4.`mvhOMg,YYB%Dpf%dByJf+l=OClNpJLk=!iQh');
+define('NONCE_KEY',        '_LhN|d3P5-2u?6w-v*.@z-]2I(oC-fO;5AoFh%Pk+8YyZz$t,U6YU fk%^m 2b7Q');
+define('AUTH_SALT',        '(?Oo?-iRgce0:Sf_*7#$wZ48W05M{i_ip0Sp-6[{](lkkoEm0#$9xK)m{2wX+~wS');
+define('SECURE_AUTH_SALT', 'NIZp-2(^Rl9-sf%zE:blEUW9Ex7qy`f*B-?jqg^q7NpQ@wuU6&(Ew<40dBrrA&Bp');
+define('LOGGED_IN_SALT',   ' :A#@&<aU4W[00Q<$:1&6v5I4>%EuSv,9|_p;XVqFZwn1w9%!ML%3|],FecJQwz_');
+define('NONCE_SALT',       '++|eK4~!Tm?gkc%0Qdu1+/8b?3Xp++*.7+L!JRr7p}8|j]U=;WH8hE:Vv%<P$?oK');
+/**#@-*/
+
+/**
+ * WordPress Database Table prefix.
+ *
+ * You can have multiple installations in one database if you give each a unique
+ * prefix. Only numbers, letters, and underscores please!
+ */
+$table_prefix  = 'wp_';
+
+/**
+ * WordPress Localized Language, defaults to English.
+ *
+ * Change this to localize WordPress.  A corresponding MO file for the chosen
+ * language must be installed to wp-content/languages. For example, install
+ * de.mo to wp-content/languages and set WPLANG to 'de' to enable German
+ * language support.
+ */
+define ('WPLANG', 'en_US');
+
+define ('FS_METHOD', 'direct');
+
+define('WP_DEBUG', false);
+
+/* That's all, stop editing! Happy blogging. */
+
+/** WordPress absolute path to the Wordpress directory. */
+if ( !defined('ABSPATH') )
+        define('ABSPATH', dirname(__FILE__) . '/');
+
+/** Sets up WordPress vars and included files. */
+require_once(ABSPATH . 'wp-settings.php');
+
+?>

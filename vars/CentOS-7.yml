@@ -1,0 +1,2 @@
+---
+default_wordpress_mysql_service: mariadb

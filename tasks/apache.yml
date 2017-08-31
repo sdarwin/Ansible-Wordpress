@@ -1,0 +1,104 @@
+---
+- name: apt update 
+  apt: update_cache=yes 
+  changed_when: False
+  when: ansible_os_family == "Debian"
+  
+- name: install apache packages (Debian)
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ wordpress_packages_apache }}"
+  when: ansible_os_family == "Debian"	
+
+- name: install general packages (RHEL)
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items: "{{ wordpress_packages_apache }}"
+  when: ansible_os_family == "RedHat"
+
+- name: enabled mod_rewrite
+  apache2_module: name={{ item }} state=present
+  with_items:
+    - rewrite
+    - ssl
+  notify:
+    - restart apache
+  when: ansible_os_family == "Debian"	
+
+- name: create apache sites-available
+  file:
+    path: "/etc/{{ wordpress_apache_service }}/sites-available"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: create apache sites-enabled
+  file:
+    path: "/etc/{{ wordpress_apache_service }}/sites-enabled"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: enable apache sites-enabled
+  lineinfile: dest="/etc/{{ wordpress_apache_service }}/conf/httpd.conf" line="IncludeOptional sites-enabled/*.conf"
+  when: ansible_os_family == 'RedHat'
+
+- name: create deploy dir
+  file: dest={{ wordpress_deploy_dir }} owner={{ wordpress_deploy_user }}  group={{ wordpress_deploy_group }} state=directory
+  notify:
+    - restart apache
+
+- name: fix permissions on home dir
+  file: dest={{ wordpress_deploy_user_home }} state=directory mode=755
+  notify:
+    - restart apache
+  when: ansible_os_family == 'RedHat'
+    
+- name: create virtual host file
+  template: src=web_app.conf.j2 dest=/etc/{{ wordpress_apache_service }}/sites-available/{{ wordpress_server_name }}.conf owner=root group=root
+  notify:
+    - restart apache
+
+- name: enable site
+  file: src=/etc/{{ wordpress_apache_service }}/sites-available/{{ wordpress_server_name }}.conf dest=/etc/{{ wordpress_apache_service }}/sites-enabled/{{ wordpress_server_name }}.conf owner=root group=root state=link
+  notify:
+    - restart apache
+
+- name: remove default site
+  file: dest=/etc/{{ wordpress_apache_service }}/sites-enabled/{{ item }} state=absent
+  with_items:
+    - default
+    - 000-default.conf
+    - 000-default   
+  notify:
+    - restart apache
+
+- name: Set htpasswd for gui users
+  htpasswd: crypt_scheme=plaintext path=/etc/{{ wordpress_apache_service }}/htpasswd.{{ wordpress_server_name }} name={{ item.username }} password={{ item.htpasswd }} state=present
+  with_items: "{{ wordpress_htusers | default([]) }}"
+  changed_when: False
+
+- name: create cert (Redhat)
+  shell: /etc/ssl/certs/make-dummy-cert {{ wordpress_ssl_cert }} ; chmod 640 {{ wordpress_ssl_cert }} ; chgrp {{ wordpress_users.web }} {{ wordpress_ssl_cert }}
+  args:
+    creates: "{{ wordpress_ssl_cert }}"
+  when: ansible_os_family == "RedHat"
+  notify: restart apache
+
+- name: create key (Redhat)
+  shell: mkdir -p /etc/ssl/private ; cp -p {{ wordpress_ssl_cert }} {{ wordpress_ssl_key }}
+  args:
+    creates: "{{ wordpress_ssl_key }}"
+  when: ansible_os_family == "RedHat"
+  notify: restart apache
+  
+# Put SELinux in permissive mode, logging actions that would be blocked.
+- selinux:
+    policy: targeted
+    state: permissive
+  when: ansible_os_family == "RedHat"

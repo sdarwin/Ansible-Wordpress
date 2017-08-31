@@ -1,0 +1,15 @@
+---
+- hosts: appserver
+  vars:
+    - ansible_ssh_user: "{{initial_ssh_user}}"
+  become: yes
+  roles:
+    - { role: 'sdarwin.wordpress', run_deploy_users: true }
+
+- hosts: dbserver
+  vars:
+    - ansible_ssh_user: "{{initial_ssh_user}}"
+  become: yes
+  roles:
+    - { role: 'sdarwin.wordpress', run_deploy_users: true }
+

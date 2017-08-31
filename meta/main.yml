@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  author: sdarwin
+  description: WordPress
+  license: GPLv2
+  min_ansible_version: 2.2
+  platforms:
+  - name: EL
+    versions:
+    - 7
+  - name: Ubuntu
+    versions:
+    - xenial
+  - name: Debian
+    versions:
+    - jessie
+    - stretch
+  categories:
+    - development
+    - web
+dependencies: []

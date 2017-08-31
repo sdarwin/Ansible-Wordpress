@@ -1,0 +1,42 @@
+---
+default_wordpress_packages_general:
+  - htop
+  - mlocate
+  - epel-release
+  - git
+  - wget
+  - gcc
+  - python-passlib
+  - python-pip
+  
+default_wordpress_packages_apache:
+  - httpd
+  - php
+  - php-cli
+  - php-mysql
+  - php-process
+  - php-devel
+  - php-gd
+  - php-pecl-apc
+  - php-pecl-json
+  - php-mbstring
+  - mod_ssl
+  - openssl
+
+default_wordpress_packages_mysql:
+  - mariadb-server
+  - python-devel
+  - mariadb-devel
+  - gcc
+  - MySQL-python
+
+#default_wordpress_packages_email: 
+#  - postfix
+    
+default_wordpress_users:
+  web: apache
+
+default_wordpress_mysql_service: mysqld
+default_wordpress_mysql_path: /etc/my.cnf.d
+
+default_wordpress_apache_service: httpd

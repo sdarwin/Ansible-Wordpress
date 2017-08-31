@@ -1,0 +1,4 @@
+[mysqld]
+max_allowed_packet = {{ wordpress_mysql_cnf_config.max_allowed_packet }}
+innodb_buffer_pool_size = {{ wordpress_mysql_cnf_config.innodb_buffer_pool_size }}
+bind-address = {{ wordpress_mysql_cnf_config.bind_address }}

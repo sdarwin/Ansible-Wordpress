@@ -1,0 +1,23 @@
+---   
+- pip:
+    name: boto
+    
+- name: get date
+  shell: date +"%Y_%m_%d_%H_%M_%S"
+  register: wordpress_export_date
+
+- name: Set fact wordpress_sql_export_file
+  set_fact: wordpress_sql_export_file={{ wordpress_server_name }}.{{ ansible_hostname }}.{{ wordpress_export_date.stdout }}.sql.gz
+     
+- name: export database
+  shell: /usr/bin/mysqldump -uroot -p{{ wordpress_database_root_password }} {{wordpress_database_name}} | /bin/gzip > /opt/downloads/{{ wordpress_sql_export_file }}
+
+- name: upload s3 backup of the database
+  s3:
+    bucket: "{{ wordpress_s3_bucket }}"
+    object: "{{ wordpress_s3_path }}/{{ wordpress_sql_export_file }}"
+    src: "/opt/downloads/{{ wordpress_sql_export_file }}"
+    aws_access_key: "{{ wordpress_aws_access_key }}"
+    aws_secret_key: "{{ wordpress_aws_secret_key }}"
+    mode: put
+  

@@ -1,0 +1,5 @@
+---
+- hosts: wpappservers
+  remote_user: wpdeploy
+  roles:
+    - { role: 'sdarwin.wordpress', run_backup: true }
