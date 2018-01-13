@@ -82,3 +82,5 @@ GPLv2
 By Sam Darwin, 2017
 
 Feedback and bug reports welcome.
+
+[![Analytics](https://ga-beacon.appspot.com/UA-112361697-1/Ansible-Wordpress)](https://github.com/igrigorik/ga-beacon)
