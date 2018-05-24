@@ -1,6 +1,6 @@
 ---
 - hosts: wpdbservers
-  remote_user: ansible
+  #remote_user: ansible
   become: yes
   roles:
     - { role: 'sdarwin.wordpress', run_update_packages: true }
@@ -9,7 +9,7 @@
     - { role: 'sdarwin.wordpress', run_email: true }
 
 - hosts: wpappservers
-  remote_user: ansible
+  #remote_user: ansible
   become: yes
   roles:
     - { role: 'sdarwin.wordpress', run_update_packages: true }
