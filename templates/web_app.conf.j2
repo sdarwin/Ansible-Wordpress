@@ -58,8 +58,9 @@
     AuthUserFile "/etc/{{ wordpress_apache_service }}/htpasswd.{{ wordpress_server_name }}"
     Require valid-user
     {% endif %}
-    Order allow,deny
-    Allow from all
+    #Order allow,deny
+    #Allow from all
+	Require all granted
   </Directory>
 
   <Directory />
