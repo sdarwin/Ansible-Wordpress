@@ -13,16 +13,16 @@ wordpress_deploy_group: wpdeploy
 wordpress_deploy_user_home: /home/wpdeploy
 wordpress_deploy_dir: /home/wpdeploy/www/wordpress
 wordpress_server_docroot: /home/wpdeploy/www/wordpress
+
+#The htpasswd is "wordpress". If you'd like, create a new one (example command: "htpasswd -n admin") and update your vars file.
+wordpress_auth_website: True
 wordpress_htusers:  
   - username: admin
-    htpasswd: $apr1$fZdtf2w9$CdMfB44mEY9npbMYyDFU/1
-
-wordpress_initial_ssh_user: ansible
+    htpasswd: $apr1$0tHTW84T$hhxRIsBwHwfPOHcLCNrZB.
 
 wordpress_enable_ssl: True
 wordpress_ssl_cert: /etc/ssl/certs/ssl-cert-snakeoil.pem
 wordpress_ssl_key: /etc/ssl/private/ssl-cert-snakeoil.key
-wordpress_auth_website: True
 
 wordpress_ssh_public_keys: [ "ssh-rsa LBKx7PldzWRkgTWlsuUpj4ZoD2T1KyVpBdubXys+uyHTT3qCUYqeiVB9Wtwcxwl1WM3JB39QutKA91vMOXLFjV03z9CP2eTNsIN40cIkzzoVCke7gUj8g66eQqOZXvulVJwxr0hCNCZrxgbH2cF+eaduC4daqChQJivWZVCrH2TwnmGHMTvcivCyF0gMqkTdux5wKbdXdS+XNqqXfn4epiVNtVJDPSsC6ISv/SsOhFcQOyIIIQxZp1rDeZTvtabL2eLjZLP82ba/zVrv5wUz user1@example.com",
 "ssh-rsa QWERTYLBKx7PldzWRkgTWlsuUpj4ZoD2T1KyVpBdubXys+uyHTT3qCUYqeiVB9Wtwcxwl1WM3JB39QutKA91vMOXLFjV03z9CP2eTNsIN40cIkzzoVCke7gUj8g66eQqOZXvulVJwxr0hCNCZrxgbH2cF+eaduC4daqChQJivWZVCrH2TwnmGHMTvcivCyF0gMqkTdux5wKbdXdS+XNqqXfn4epiVNtVJDPSsC6ISv/SsOhFcQOyIIIQxZp1rDeZTvtabL2eLjZLP82ba/zVrv5wUz user2@example.com" ]

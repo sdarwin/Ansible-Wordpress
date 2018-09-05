@@ -1,6 +1,7 @@
 ---
 # handlers file for wordpress
 - name: restart apache
+  become: yes
   service:
     name: "{{ wordpress_apache_service }}"
     state: restarted
