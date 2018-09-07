@@ -11,8 +11,9 @@ wordpress_server_aliases:
 wordpress_deploy_user: wpdeploy
 wordpress_deploy_group: wpdeploy
 wordpress_deploy_user_home: /home/wpdeploy
-wordpress_deploy_dir: /home/wpdeploy/www/wordpress
-wordpress_server_docroot: /home/wpdeploy/www/wordpress
+wordpress_deploy_to: /home/wpdeploy/www/wordpress
+wordpress_deploy_dir: "{{ wordpress_deploy_to }}"
+wordpress_server_docroot: "{{ wordpress_deploy_dir }}"
 #The htpasswd is "wordpress". If you'd like, create a new one (example command: "htpasswd -n admin") and update your vars file.
 wordpress_auth_website: True
 wordpress_htusers:  

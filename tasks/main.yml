@@ -29,6 +29,10 @@
 - name: install webserver
   include: webserver.yml
   when: run_webserver is defined 
+
+- name: install shared files
+  include: sharedfiles.yml
+  when: run_webserver is defined 
   
 - name: install email
   include: email.yml
