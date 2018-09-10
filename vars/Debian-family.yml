@@ -8,6 +8,7 @@ default_wordpress_packages_general:
   - net-tools
   - python-passlib
   - python-pip
+  - python3-pip
   
 default_wordpress_packages_apache:
   - apache2
@@ -30,6 +31,7 @@ default_wordpress_packages_mysql:
   - python-dev
   - libmysqlclient-dev
   - python-mysqldb
+  - python3-mysqldb
   
 default_wordpress_packages_exim: 
     - exim4

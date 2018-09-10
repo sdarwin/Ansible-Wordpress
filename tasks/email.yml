@@ -1,12 +1,12 @@
 ---
 #Centos already has postfix installed. For now, leave that as-is. Install Exim on Debian only.
 - name: install exim
-  include: exim.yml
+  include_tasks: exim.yml
   when: wordpress_emailserver == "exim" and ansible_os_family == "Debian"	
 
 #possibly for later
 - name: install postfix
-  include: postfix.yml
+  include_tasks: postfix.yml
   static: no
   when: wordpress_emailserver == "postfix"
   

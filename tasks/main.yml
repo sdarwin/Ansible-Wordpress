@@ -12,40 +12,40 @@
 - name: set facts based on defaults
   set_fact:
     "{{ item[8:] }}": "{{  vars[item[8:]] | default(vars[item]) }}"
-  when: item | match("^default_")
+  when: item is match("^default_")
   with_items:
     "{{ vars }}"
    
 # End Variables ##########
 
 - name: update packages
-  include: update_packages.yml
+  include_tasks: update_packages.yml
   when: run_update_packages is defined 
 
 - name: deploy users
-  include: deploy_users.yml
+  include_tasks: deploy_users.yml
   when: run_deploy_users is defined 
   
 - name: install webserver
-  include: webserver.yml
+  include_tasks: webserver.yml
   when: run_webserver is defined 
 
 - name: install shared files
-  include: sharedfiles.yml
+  include_tasks: sharedfiles.yml
   when: run_webserver is defined 
   
 - name: install email
-  include: email.yml
+  include_tasks: email.yml
   when: run_email is defined 
   
 - name: install mysql
-  include: mysql.yml
+  include_tasks: mysql.yml
   when: run_mysql is defined 
   
 - name: deploy wordpress code
-  include: wpapp.yml
+  include_tasks: wpapp.yml
   when: run_wpapp is defined 
   
 - name: backup
-  include: backup.yml
+  include_tasks: backup.yml
   when: run_backup is defined 

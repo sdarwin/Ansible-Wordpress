@@ -1,10 +1,10 @@
 ---
 - name: install apache
-  include: apache.yml
+  include_tasks: apache.yml
   when: wordpress_webserver == "apache"
 
 #for later
 - name: install nginx
-  include: nginx.yml
+  include_tasks: nginx.yml
   static: no
   when: wordpress_webserver == "nginx"

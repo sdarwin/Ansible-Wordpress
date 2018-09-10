@@ -8,6 +8,7 @@ default_wordpress_packages_general:
   - gcc
   - python-passlib
   - python-pip
+  - python3-pip
   
 default_wordpress_packages_apache:
   - httpd

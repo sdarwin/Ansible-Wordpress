@@ -78,6 +78,9 @@
   notify:
     - restart apache
 
+- name: Install latest passlib with pip
+  pip: name=passlib
+
 - name: Set htpasswd for gui users
   htpasswd: crypt_scheme=plaintext path=/etc/{{ wordpress_apache_service }}/htpasswd.{{ wordpress_server_name }} name={{ item.username }} password={{ item.htpasswd }} state=present
   with_items: "{{ wordpress_htusers | default([]) }}"
