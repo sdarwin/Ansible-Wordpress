@@ -49,3 +49,6 @@ wordpress_mysql_cnf_config:
   max_allowed_packet: 32M
   innodb_buffer_pool_size: 1000M
   bind_address: 0.0.0.0
+
+wordpress_create_shared: False
+

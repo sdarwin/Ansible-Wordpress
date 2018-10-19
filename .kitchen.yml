@@ -1,22 +1,41 @@
 ---
 driver:
-  name: vagrant
-  network:
-  - ["forwarded_port", {guest: 80, host: 80}]
-  - ["forwarded_port", {guest: 443, host: 443}]
-  customize:
-    memory: 4000
-    cpus: 4
+  name: ec2
+  region: ca-central-1
+  subnet_id: subnet-99e681e2
+  security_group_ids: 
+    - sg-24901f4c
+  aws_ssh_key_id: testkitchen
+  instance_type: t2.xlarge
 
 transport:
-  max_ssh_sessions: 4
-    
+  ssh_key: /amaz/testkitchen.pem
+  connection_timeout: 10
+  connection_retries: 5
+  max_ssh_sessions: 6
+
 platforms:
-  - name: ubuntu-16.04 
-  #- name: centos/7
-  #- name: debian-8.8
-  #- name: debian-9.1
-  
+- name: ubuntu-18.04
+  driver:
+    image_id: ami-0427e8367e3770df1
+  transport:
+    username: ubuntu
+#- name: ubuntu-16.04
+#  driver:
+#    image_id: ami-018b3065
+#    transport:
+#      username: ubuntu
+#- name: debian-9.3
+#  driver:
+#    image_id: ami-1545ff71
+#  transport:
+#    username: admin
+#- name: centos-7.4
+#  driver:
+#    image_id: ami-dcad28b8
+#  transport:
+#    username: centos
+ 
 provisioner:
   name: ansible_playbook
   roles_path: ../
@@ -27,7 +46,10 @@ provisioner:
   #playbook: backup.yml
   require_ansible_repo: true
   ansible_verbose: true
+  ansible_verbosity: 3
+  #ansible_version: latest
   ansible_version: latest
+  ansible_sudo: false
   require_chef_for_busser: false
   #ansible_connection: winrm
   #require_windows_support: true

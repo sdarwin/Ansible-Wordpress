@@ -15,7 +15,7 @@
   when: item is match("^default_")
   with_items:
     "{{ vars }}"
-   
+
 # End Variables ##########
 
 - name: update packages
@@ -25,27 +25,29 @@
 - name: deploy users
   include_tasks: deploy_users.yml
   when: run_deploy_users is defined 
-  
+
 - name: install webserver
   include_tasks: webserver.yml
   when: run_webserver is defined 
 
 - name: install shared files
   include_tasks: sharedfiles.yml
-  when: run_webserver is defined 
-  
+  when:
+    - wordpress_create_shared
+    - run_webserver is defined 
+
 - name: install email
   include_tasks: email.yml
-  when: run_email is defined 
-  
+  when: run_email is defined
+
 - name: install mysql
   include_tasks: mysql.yml
   when: run_mysql is defined 
-  
+
 - name: deploy wordpress code
   include_tasks: wpapp.yml
   when: run_wpapp is defined 
-  
+
 - name: backup
   include_tasks: backup.yml
-  when: run_backup is defined 
+  when: run_backup is defined

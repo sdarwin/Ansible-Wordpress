@@ -2,18 +2,16 @@
 
 - name: install mysql packages (Debian)
   apt:
-    name: "{{ item }}"
+    name: "{{ wordpress_packages_mysql}}"
     state: present
     update_cache: yes
-  with_items: "{{ wordpress_packages_mysql }}"
-  when: ansible_os_family == "Debian"	
+  when: ansible_os_family == "Debian"
 
 - name: install mysql packages (RHEL)
   yum:
-    name: "{{ item }}"
+    name: "{{ wordpress_packages_mysql }}"
     state: present
     update_cache: yes
-  with_items: "{{ wordpress_packages_mysql }}"
   when: ansible_os_family == "RedHat"
 
 - name: install boto pip module
@@ -44,8 +42,11 @@
   mysql_user: name=root host=localhost password={{ wordpress_database_root_password }}
 
 - name: create user .my.cnf file with root password credentials
-  template: src=.my.cnf dest=~/.my.cnf mode=0600
-  become: no
+  template:
+    src: .my.cnf
+    dest: ~/.my.cnf
+    mode: 0600
+  become: false
 
 - name: create root .my.cnf file with root password credentials
   template: src=.my.cnf dest=/root/.my.cnf mode=0600

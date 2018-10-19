@@ -6,17 +6,15 @@
   
 - name: install apache packages (Debian)
   apt:
-    name: "{{ item }}"
+    name: "{{ wordpress_packages_apache }}"
     state: present
-  with_items: "{{ wordpress_packages_apache }}"
-  when: ansible_os_family == "Debian"	
+  when: ansible_os_family == "Debian"
 
 - name: install general packages (RHEL)
   yum:
-    name: "{{ item }}"
+    name: "{{ wordpress_packages_apache }}"
     state: present
     update_cache: yes
-  with_items: "{{ wordpress_packages_apache }}"
   when: ansible_os_family == "RedHat"
 
 - name: enabled mod_rewrite
@@ -26,7 +24,7 @@
     - ssl
   notify:
     - restart apache
-  when: ansible_os_family == "Debian"	
+  when: ansible_os_family == "Debian"
 
 - name: create apache sites-available
   file:
@@ -100,8 +98,18 @@
   when: ansible_os_family == "RedHat"
   notify: restart apache
   
+- name: Check that /etc/selinux/config exists
+  stat:
+    path: /etc/selinux/config
+  register: stat_result
+  when:
+    - ansible_os_family == "RedHat"
+
 # Put SELinux in permissive mode, logging actions that would be blocked.
 - selinux:
     policy: targeted
     state: permissive
-  when: ansible_os_family == "RedHat"
+  when:
+    - ansible_os_family == "RedHat"
+    - stat_result.stat.exists == True
+

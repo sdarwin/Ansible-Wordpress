@@ -3,7 +3,7 @@ galaxy_info:
   author: sdarwin
   description: WordPress
   license: GPLv2
-  min_ansible_version: 2.2
+  min_ansible_version: 2.4
   platforms:
   - name: EL
     versions:
@@ -11,6 +11,7 @@ galaxy_info:
   - name: Ubuntu
     versions:
     - xenial
+    - bionic
   - name: Debian
     versions:
     - jessie
