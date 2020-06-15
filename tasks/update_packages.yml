@@ -1,8 +1,7 @@
 ---
-
-- name: apt update 
-  apt: update_cache=yes 
-  changed_when: False
+- name: apt update
+  apt: update_cache=yes
+  changed_when: false
   when: ansible_os_family == "Debian"
 
 - name: install general packages (Debian)
@@ -15,5 +14,5 @@
   yum:
     name: "{{ wordpress_packages_general }}"
     state: present
-    update_cache: yes
+    update_cache: true
   when: ansible_os_family == "RedHat"

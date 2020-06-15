@@ -8,9 +8,9 @@ default_wordpress_packages_general:
   - gcc
   - python-passlib
   - python-pip
-  #- python3-pip
+  # - python3-pip
   - libselinux-python
-  
+
 default_wordpress_packages_apache:
   - httpd
   - php
@@ -32,9 +32,9 @@ default_wordpress_packages_mysql:
   - gcc
   - MySQL-python
 
-#default_wordpress_packages_email: 
-#  - postfix
-    
+# default_wordpress_packages_email:
+#   - postfix
+
 default_wordpress_users:
   web: apache
 

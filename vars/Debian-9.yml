@@ -1,6 +1,6 @@
 ---
-#Debian 9 variables
-  
+# Debian 9 variables
+
 default_wordpress_packages_mysql:
   - mysql-server
   - python-dev

@@ -1,20 +1,19 @@
 ---
 - hosts: wpdbservers
-  #remote_user: ansible
-  become: yes
+  # remote_user: ansible
+  become: true
   roles:
-    - { role: 'role_under_test', run_update_packages: true }
-    - { role: 'role_under_test', run_deploy_users: true }
-    - { role: 'role_under_test', run_mysql: true }
-    - { role: 'role_under_test', run_email: true }
+    - {role: 'role_under_test', run_update_packages: true}
+    - {role: 'role_under_test', run_deploy_users: true}
+    - {role: 'role_under_test', run_mysql: true}
+    - {role: 'role_under_test', run_email: true}
 
 - hosts: wpappservers
-  #remote_user: ansible
-  become: yes
+  # remote_user: ansible
+  become: true
   roles:
-    - { role: 'role_under_test', run_update_packages: true }
-    - { role: 'role_under_test', run_deploy_users: true }
-    - { role: 'role_under_test', run_webserver: true }
-    - { role: 'role_under_test', run_email: true }
-    - { role: 'role_under_test', run_wpapp: true }
-    
+    - {role: 'role_under_test', run_update_packages: true}
+    - {role: 'role_under_test', run_deploy_users: true}
+    - {role: 'role_under_test', run_webserver: true}
+    - {role: 'role_under_test', run_email: true}
+    - {role: 'role_under_test', run_wpapp: true}

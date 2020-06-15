@@ -9,12 +9,12 @@ default_wordpress_packages_general:
   - python-passlib
   - python-pip
   - python3-pip
-  
+
 default_wordpress_packages_apache:
   - apache2
   - dpkg-dev
   - php
-  - libapache2-mod-php 
+  - libapache2-mod-php
   - php-mcrypt
   - php-mysql
   - php-gd
@@ -25,16 +25,16 @@ default_wordpress_packages_apache:
   - php-mbstring
   - php-apcu
   - ssl-cert
-  
+
 default_wordpress_packages_mysql:
   - mysql-server
   - python-dev
   - libmysqlclient-dev
   - python-mysqldb
   - python3-mysqldb
-  
-default_wordpress_packages_exim: 
-    - exim4
+
+default_wordpress_packages_exim:
+  - exim4
 
 default_wordpress_users:
   web: www-data

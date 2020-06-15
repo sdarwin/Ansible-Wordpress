@@ -1,25 +1,27 @@
 ---
 # handlers file for wordpress
 - name: restart apache
-  become: yes
+  become: true
   service:
     name: "{{ wordpress_apache_service }}"
     state: restarted
-    enabled: yes
+    enabled: true
 
 - name: restart mysql
   service:
     name: "{{ wordpress_mysql_service }}"
     state: restarted
-    enabled: yes
+    enabled: true
 
 - name: restart exim
   service:
     name: "{{ wordpress_exim_service }}"
     state: restarted
-    enabled: yes
+    enabled: true
 
-#this handler is only called when the db is created    
+# this handler is only called when the db is created
 - name: import database
-  shell: zcat /opt/downloads/{{ wordpress_sql_file }} | /usr/bin/mysql -u root -p{{ wordpress_database_root_password }} -r -B -N {{wordpress_database_name}}
-  when: wordpress_check_s3_path_exists is defined and wordpress_check_s3_path_exists == True
+  shell: zcat /opt/downloads/{{ wordpress_sql_file }} | /usr/bin/mysql -u root -p{{ wordpress_database_root_password }} -r -B -N {{ wordpress_database_name }}
+  when:
+    - wordpress_check_s3_path_exists is defined
+    - wordpress_check_s3_path_exists

@@ -1,6 +1,6 @@
 ---
 
-#These tasks are aimed at supporting Ansistrano. If that's not used, it should not interfere with anything. 
+# These tasks are aimed at supporting Ansistrano. If that's not used, it should not interfere with anything.
 
 - name: create shared dir
   file: dest={{ wordpress_deploy_to }}/shared owner={{ wordpress_deploy_user }}  group={{ wordpress_deploy_group }} state=directory
@@ -10,5 +10,4 @@
 - name: create wp-config.php
   template:
     src: wp-config.php.j2
-    dest: "{{wordpress_deploy_to}}/shared/wp-config.php"
-
+    dest: "{{ wordpress_deploy_to }}/shared/wp-config.php"

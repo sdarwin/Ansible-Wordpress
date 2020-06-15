@@ -1,9 +1,9 @@
 ---
-- name: apt update 
-  apt: update_cache=yes 
-  changed_when: False
+- name: apt update
+  apt: update_cache=yes
+  changed_when: false
   when: ansible_os_family == "Debian"
-  
+
 - name: install apache packages (Debian)
   apt:
     name: "{{ wordpress_packages_apache }}"
@@ -14,7 +14,7 @@
   yum:
     name: "{{ wordpress_packages_apache }}"
     state: present
-    update_cache: yes
+    update_cache: true
   when: ansible_os_family == "RedHat"
 
 - name: enabled mod_rewrite
@@ -56,14 +56,19 @@
   notify:
     - restart apache
   when: ansible_os_family == 'RedHat'
-    
+
 - name: create virtual host file
   template: src=web_app.conf.j2 dest=/etc/{{ wordpress_apache_service }}/sites-available/{{ wordpress_server_name }}.conf owner=root group=root
   notify:
     - restart apache
 
 - name: enable site
-  file: src=/etc/{{ wordpress_apache_service }}/sites-available/{{ wordpress_server_name }}.conf dest=/etc/{{ wordpress_apache_service }}/sites-enabled/{{ wordpress_server_name }}.conf owner=root group=root state=link
+  file:
+    src: /etc/{{ wordpress_apache_service }}/sites-available/{{ wordpress_server_name }}.conf
+    dest: /etc/{{ wordpress_apache_service }}/sites-enabled/{{ wordpress_server_name }}.conf
+    owner: root
+    group: root
+    state: link
   notify:
     - restart apache
 
@@ -72,7 +77,7 @@
   with_items:
     - default
     - 000-default.conf
-    - 000-default   
+    - 000-default
   notify:
     - restart apache
 
@@ -80,9 +85,14 @@
   pip: name=passlib
 
 - name: Set htpasswd for gui users
-  htpasswd: crypt_scheme=plaintext path=/etc/{{ wordpress_apache_service }}/htpasswd.{{ wordpress_server_name }} name={{ item.username }} password={{ item.htpasswd }} state=present
+  htpasswd:
+    crypt_scheme: plaintext
+    path: /etc/{{ wordpress_apache_service }}/htpasswd.{{ wordpress_server_name }}
+    name: "{{ item.username }}"
+    password: "{{ item.htpasswd }}"
+    state: present
   with_items: "{{ wordpress_htusers | default([]) }}"
-  changed_when: False
+  changed_when: false
 
 - name: create cert (Redhat)
   shell: /etc/ssl/certs/make-dummy-cert {{ wordpress_ssl_cert }} ; chmod 640 {{ wordpress_ssl_cert }} ; chgrp {{ wordpress_users.web }} {{ wordpress_ssl_cert }}
@@ -91,13 +101,24 @@
   when: ansible_os_family == "RedHat"
   notify: restart apache
 
-- name: create key (Redhat)
-  shell: mkdir -p /etc/ssl/private ; cp -p {{ wordpress_ssl_cert }} {{ wordpress_ssl_key }}
-  args:
-    creates: "{{ wordpress_ssl_key }}"
-  when: ansible_os_family == "RedHat"
-  notify: restart apache
-  
+# TODO: what are these steps doing? Test ssl keys.
+#
+# - name: create key, part 1 (Redhat)
+#  file:
+#    path: /etc/ssl/private
+#    state: directory
+#    mode: '0710'
+#    owner: root
+#    group: ssl-cert
+#  when: ansible_os_family == "RedHat"
+
+# - name: create key, part2 (Redhat)
+#  shell: cp -p {{ wordpress_ssl_cert }} {{ wordpress_ssl_key }}
+#  args:
+#    creates: "{{ wordpress_ssl_key }}"
+#  when: ansible_os_family == "RedHat"
+#  notify: restart apache
+
 - name: Check that /etc/selinux/config exists
   stat:
     path: /etc/selinux/config
@@ -105,11 +126,10 @@
   when:
     - ansible_os_family == "RedHat"
 
-# Put SELinux in permissive mode, logging actions that would be blocked.
-- selinux:
+- name: put SELinux in permissive mode
+  selinux:
     policy: targeted
     state: permissive
   when:
     - ansible_os_family == "RedHat"
-    - stat_result.stat.exists == True
-
+    - stat_result.stat.exists

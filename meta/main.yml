@@ -5,18 +5,18 @@ galaxy_info:
   license: GPLv2
   min_ansible_version: 2.4
   platforms:
-  - name: EL
-    versions:
-    - 7
-  - name: Ubuntu
-    versions:
-    - xenial
-    - bionic
-  - name: Debian
-    versions:
-    - jessie
-    - stretch
-  categories:
+    - name: EL
+      versions:
+        - 7
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
+  galaxy_tags:
     - development
     - web
 dependencies: []

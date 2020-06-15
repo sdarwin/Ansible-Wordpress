@@ -5,8 +5,8 @@ wordpress_server_name: www.example.com
 wordpress_home: http://www.example.com
 wordpress_wpsiteurl: http://www.example.com
 
-wordpress_server_aliases:  
-  - localhost 
+wordpress_server_aliases:
+  - localhost
   - dev.example.com
 wordpress_deploy_user: wpdeploy
 wordpress_deploy_group: wpdeploy
@@ -14,20 +14,19 @@ wordpress_deploy_user_home: /home/wpdeploy
 wordpress_deploy_to: /home/wpdeploy/www/wordpress
 wordpress_deploy_dir: "{{ wordpress_deploy_to }}"
 wordpress_server_docroot: "{{ wordpress_deploy_dir }}"
-#The htpasswd is "wordpress". If you'd like, create a new one (example command: "htpasswd -n admin") and update your vars file.
-wordpress_auth_website: True
-wordpress_htusers:  
+# The htpasswd is "wordpress". If you'd like, create a new one (example command: "htpasswd -n admin") and update your vars file.
+wordpress_auth_website: true
+wordpress_htusers:
   - username: admin
     htpasswd: $apr1$0tHTW84T$hhxRIsBwHwfPOHcLCNrZB.
 
-wordpress_enable_ssl: True
+wordpress_enable_ssl: true
 wordpress_ssl_cert: /etc/ssl/certs/ssl-cert-snakeoil.pem
 wordpress_ssl_key: /etc/ssl/private/ssl-cert-snakeoil.key
 
-wordpress_ssh_public_keys: [ "ssh-rsa LBKx7PldzWRkgTWlsuUpj4ZoD2T1KyVpBdubXys+uyHTT3qCUYqeiVB9Wtwcxwl1WM3JB39QutKA91vMOXLFjV03z9CP2eTNsIN40cIkzzoVCke7gUj8g66eQqOZXvulVJwxr0hCNCZrxgbH2cF+eaduC4daqChQJivWZVCrH2TwnmGHMTvcivCyF0gMqkTdux5wKbdXdS+XNqqXfn4epiVNtVJDPSsC6ISv/SsOhFcQOyIIIQxZp1rDeZTvtabL2eLjZLP82ba/zVrv5wUz user1@example.com",
-"ssh-rsa QWERTYLBKx7PldzWRkgTWlsuUpj4ZoD2T1KyVpBdubXys+uyHTT3qCUYqeiVB9Wtwcxwl1WM3JB39QutKA91vMOXLFjV03z9CP2eTNsIN40cIkzzoVCke7gUj8g66eQqOZXvulVJwxr0hCNCZrxgbH2cF+eaduC4daqChQJivWZVCrH2TwnmGHMTvcivCyF0gMqkTdux5wKbdXdS+XNqqXfn4epiVNtVJDPSsC6ISv/SsOhFcQOyIIIQxZp1rDeZTvtabL2eLjZLP82ba/zVrv5wUz user2@example.com" ]
+wordpress_ssh_public_keys: ["ssh-rsa LBKx7PldzWRkgTWlsuUpj4ZoD2T1KyVpBdubXys+uyHTT3qCUYqeiVB9Wtwcxwl1WM3JB39QutKA91vMOXLFjV03z9CP2eTNsIN40cIkzzoVCke7gUj8g66eQqOZXvulVJwxr0hCNCZrxgbH2cF+eaduC4daqChQJivWZVCrH2TwnmGHMTvcivCyF0gMqkTdux5wKbdXdS+XNqqXfn4epiVNtVJDPSsC6ISv/SsOhFcQOyIIIQxZp1rDeZTvtabL2eLjZLP82ba/zVrv5wUz user1@example.com", "ssh-rsa QWERTYLBKx7PldzWRkgTWlsuUpj4ZoD2T1KyVpBdubXys+uyHTT3qCUYqeiVB9Wtwcxwl1WM3JB39QutKA91vMOXLFjV03z9CP2eTNsIN40cIkzzoVCke7gUj8g66eQqOZXvulVJwxr0hCNCZrxgbH2cF+eaduC4daqChQJivWZVCrH2TwnmGHMTvcivCyF0gMqkTdux5wKbdXdS+XNqqXfn4epiVNtVJDPSsC6ISv/SsOhFcQOyIIIQxZp1rDeZTvtabL2eLjZLP82ba/zVrv5wUz user2@example.com"]  # yamllint disable-line
 
-#wordpress_git_repo: "git@github.com:sdarwin/wordpress.git"
+# wordpress_git_repo: "git@github.com:sdarwin/wordpress.git"
 wordpress_git_repo: "https://github.com/sdarwin/wordpress"
 wordpress_git_branch: master
 wordpress_database_root_password: password123
@@ -36,9 +35,9 @@ wordpress_database_password: password123
 wordpress_database_name: wordpress
 wordpress_database_host: 127.0.0.1
 wordpress_app_env: production
-#"wordpress_ignore_s3_errors: True" assumes you haven't configured S3 yet, and so it ignores errors about downloading an sql file.
-#Set this to False once S3 is working, because you don't really want to be ignoring errors.
-wordpress_ignore_s3_errors: True
+# "wordpress_ignore_s3_errors: True" assumes you haven't configured S3 yet, and so it ignores errors about downloading an sql file.
+# Set this to False once S3 is working, because you don't really want to be ignoring errors.
+wordpress_ignore_s3_errors: true
 wordpress_aws_access_key: __
 wordpress_aws_secret_key: __
 wordpress_s3_bucket: ansiblewordpressbackups
@@ -50,5 +49,4 @@ wordpress_mysql_cnf_config:
   innodb_buffer_pool_size: 1000M
   bind_address: 0.0.0.0
 
-wordpress_create_shared: False
-
+wordpress_create_shared: false

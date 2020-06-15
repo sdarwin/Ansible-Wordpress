@@ -5,7 +5,7 @@ default_wordpress_packages_apache:
   - dpkg-dev
   - php7.2
   - libapache2-mod-php
-  #- php-mcrypt
+  # - php-mcrypt
   - php7.2-mysql
   - php7.2-gd
   - php7.2-dev
@@ -15,4 +15,3 @@ default_wordpress_packages_apache:
   - php7.2-mbstring
   - php7.2-apcu
   - ssl-cert
-

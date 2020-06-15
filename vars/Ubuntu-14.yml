@@ -11,7 +11,7 @@ default_wordpress_packages_apache:
   - php5-curl
   - php5-cli
   - php5-json
-  #- php5-mbstring
+  # - php5-mbstring
   - php5-apcu
   - ssl-cert
 
@@ -20,4 +20,4 @@ default_wordpress_packages_mysql:
   - python-dev
   - libmysqlclient-dev
   - python-mysqldb
-  #- python3-mysqldb
+  # - python3-mysqldb

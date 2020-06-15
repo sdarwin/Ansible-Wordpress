@@ -3,8 +3,8 @@
   include_tasks: apache.yml
   when: wordpress_webserver == "apache"
 
-#for later
+# for later
 - name: install nginx
   include_tasks: nginx.yml
-  static: no
+  static: false
   when: wordpress_webserver == "nginx"

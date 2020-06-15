@@ -2,16 +2,16 @@
 
 - name: install mysql packages (Debian)
   apt:
-    name: "{{ wordpress_packages_mysql}}"
+    name: "{{ wordpress_packages_mysql }}"
     state: present
-    update_cache: yes
+    update_cache: true
   when: ansible_os_family == "Debian"
 
 - name: install mysql packages (RHEL)
   yum:
     name: "{{ wordpress_packages_mysql }}"
     state: present
-    update_cache: yes
+    update_cache: true
   when: ansible_os_family == "RedHat"
 
 - name: install boto pip module
@@ -19,7 +19,7 @@
     name: boto
 
 - name: ensure mysql is running and starts on boot
-  service: name={{wordpress_mysql_service}} state=started enabled=true
+  service: name={{ wordpress_mysql_service }} state=started enabled=true
 
 - name: Creates mysql_path
   file:
@@ -38,7 +38,7 @@
   notify: restart mysql
 
 # Need to do this for idempotency, see ansible docs for mysql_user
-- name: update mysql root password 
+- name: update mysql root password
   mysql_user: name=root host=localhost password={{ wordpress_database_root_password }}
 
 - name: create user .my.cnf file with root password credentials
@@ -58,9 +58,9 @@
     - 127.0.0.1
     - "%"
     - ::1
-    - "{{inventory_hostname}}"
-    - "{{ansible_hostname}}"
- 
+    - "{{ inventory_hostname }}"
+    - "{{ ansible_hostname }}"
+
 - name: ensure anonymous users are not in the database
   mysql_user: name='' host={{ item }} state=absent
   with_items:
@@ -68,9 +68,9 @@
     - 127.0.0.1
     - "%"
     - ::1
-    - "{{inventory_hostname}}"
-    - "{{ansible_hostname}}"
-    
+    - "{{ inventory_hostname }}"
+    - "{{ ansible_hostname }}"
+
 - name: create downloads directory
   file:
     path: /opt/downloads
@@ -78,7 +78,7 @@
     mode: 0755
 
 - name: download s3 backup of the database
-  s3:
+  aws_s3:
     bucket: "{{ wordpress_s3_bucket }}"
     object: "{{ wordpress_s3_path }}/{{ wordpress_sql_file }}"
     dest: "/opt/downloads/{{ wordpress_sql_file }}"
@@ -88,17 +88,17 @@
   ignore_errors: "{{ wordpress_ignore_s3_errors }}"
 
 - name: Check if s3 path exists now
-  stat: 
+  stat:
     path: /opt/downloads/{{ wordpress_sql_file }}
   register: wordpress_check_s3_path
 
 - name: And then place s3 path check in variable
-  set_fact: 
+  set_fact:
     wordpress_check_s3_path_exists: "{{ wordpress_check_s3_path.stat.exists }}"
-    
+
 - name: create db
-  mysql_db: name={{wordpress_database_name}}
+  mysql_db: name={{ wordpress_database_name }}
   notify: import database
-  
+
 - name: create application db account
-  mysql_user: name={{wordpress_database_username}} host='%' password={{wordpress_database_password}} priv="{{wordpress_database_name}}.*:ALL"
+  mysql_user: name={{ wordpress_database_username }} host='%' password={{ wordpress_database_password }} priv="{{ wordpress_database_name }}.*:ALL"

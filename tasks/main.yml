@@ -20,21 +20,21 @@
 
 - name: update packages
   include_tasks: update_packages.yml
-  when: run_update_packages is defined 
+  when: run_update_packages is defined
 
 - name: deploy users
   include_tasks: deploy_users.yml
-  when: run_deploy_users is defined 
+  when: run_deploy_users is defined
 
 - name: install webserver
   include_tasks: webserver.yml
-  when: run_webserver is defined 
+  when: run_webserver is defined
 
 - name: install shared files
   include_tasks: sharedfiles.yml
   when:
     - wordpress_create_shared
-    - run_webserver is defined 
+    - run_webserver is defined
 
 - name: install email
   include_tasks: email.yml
@@ -42,11 +42,11 @@
 
 - name: install mysql
   include_tasks: mysql.yml
-  when: run_mysql is defined 
+  when: run_mysql is defined
 
 - name: deploy wordpress code
   include_tasks: wpapp.yml
-  when: run_wpapp is defined 
+  when: run_wpapp is defined
 
 - name: backup
   include_tasks: backup.yml

@@ -1,12 +1,11 @@
 ---
-#Centos already has postfix installed. For now, leave that as-is. Install Exim on Debian only.
+# Centos already has postfix installed. For now, leave that as-is. Install Exim on Debian only.
 - name: install exim
   include_tasks: exim.yml
   when: wordpress_emailserver == "exim" and ansible_os_family == "Debian"
 
-#possibly for later
+# possibly for later
 - name: install postfix
   include_tasks: postfix.yml
-  static: no
+  static: false
   when: wordpress_emailserver == "postfix"
-  
