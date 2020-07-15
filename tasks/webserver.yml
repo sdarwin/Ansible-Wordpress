@@ -6,5 +6,4 @@
 # for later
 - name: install nginx
   include_tasks: nginx.yml
-  static: false
   when: wordpress_webserver == "nginx"

@@ -1,2 +1,7 @@
 ---
 default_wordpress_mysql_path: /etc/mysql/mysql.conf.d
+default_wordpress_python_packages:
+  - python-pip
+  - python-setuptools
+  - python3-pip
+  - python3-setuptools

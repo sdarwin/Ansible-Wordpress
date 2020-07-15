@@ -6,3 +6,9 @@ default_wordpress_packages_mysql:
   - python-dev
   - default-libmysqlclient-dev
   - python-mysqldb
+
+default_wordpress_python_packages:
+  - python-pip
+  - python-setuptools
+  - python3-pip
+  - python3-setuptools

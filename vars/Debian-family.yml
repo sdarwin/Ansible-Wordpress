@@ -6,9 +6,10 @@ default_wordpress_packages_general:
   - dpkg-dev
   - wget
   - net-tools
-  - python-passlib
-  - python-pip
+
+default_wordpress_python_packages:
   - python3-pip
+  - python3-setuptools
 
 default_wordpress_packages_apache:
   - apache2
@@ -44,3 +45,7 @@ default_wordpress_exim_service: exim4
 default_wordpress_exim_config_file: /etc/exim4/update-exim4.conf.conf
 
 default_wordpress_apache_service: apache2
+
+default_mysql_socket: /var/run/mysqld/mysqld.sock
+
+default_wordpress_cert_group: ssl-cert

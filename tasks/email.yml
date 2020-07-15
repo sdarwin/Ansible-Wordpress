@@ -7,5 +7,4 @@
 # possibly for later
 - name: install postfix
   include_tasks: postfix.yml
-  static: false
   when: wordpress_emailserver == "postfix"

@@ -16,7 +16,13 @@
 
 - name: install boto pip module
   pip:
-    name: boto
+    name:
+      - boto
+      - boto3
+
+- name: install PyMySQL module
+  pip:
+    name: PyMySQL
 
 - name: ensure mysql is running and starts on boot
   service: name={{ wordpress_mysql_service }} state=started enabled=true
@@ -37,32 +43,12 @@
     mode: 0644
   notify: restart mysql
 
-# Need to do this for idempotency, see ansible docs for mysql_user
-- name: update mysql root password
-  mysql_user: name=root host=localhost password={{ wordpress_database_root_password }}
-
-- name: create user .my.cnf file with root password credentials
-  template:
-    src: .my.cnf
-    dest: ~/.my.cnf
-    mode: 0600
-  become: false
-
-- name: create root .my.cnf file with root password credentials
-  template: src=.my.cnf dest=/root/.my.cnf mode=0600
-
-- name: update mysql root password for all root accounts
-  mysql_user: name=root host={{ item }} password={{ wordpress_database_root_password }}
-  with_items:
-    - localhost
-    - 127.0.0.1
-    - "%"
-    - ::1
-    - "{{ inventory_hostname }}"
-    - "{{ ansible_hostname }}"
-
 - name: ensure anonymous users are not in the database
-  mysql_user: name='' host={{ item }} state=absent
+  mysql_user:
+    name: ''
+    host: "{{ item }}"
+    login_unix_socket: "{{ mysql_socket }}"
+    state: absent
   with_items:
     - localhost
     - 127.0.0.1
@@ -97,8 +83,42 @@
     wordpress_check_s3_path_exists: "{{ wordpress_check_s3_path.stat.exists }}"
 
 - name: create db
-  mysql_db: name={{ wordpress_database_name }}
+  mysql_db:
+    login_unix_socket: "{{ mysql_socket }}"
+    name: "{{ wordpress_database_name }}"
   notify: import database
 
 - name: create application db account
-  mysql_user: name={{ wordpress_database_username }} host='%' password={{ wordpress_database_password }} priv="{{ wordpress_database_name }}.*:ALL"
+  mysql_user:
+    login_unix_socket: "{{ mysql_socket }}"
+    name: "{{ wordpress_database_username }}"
+    host: '%'
+    password: "{{ wordpress_database_password }}"
+    priv: "{{ wordpress_database_name }}.*:ALL"
+
+- name: update mysql root password
+  mysql_user:
+    name: root
+    host: "{{ item }}"
+    login_unix_socket: "{{ mysql_socket }}"
+    password: "{{ wordpress_database_root_password }}"
+  with_items:
+    - 127.0.0.1
+    - "%"
+    - ::1
+    - "{{ inventory_hostname }}"
+    - "{{ ansible_hostname }}"
+    - localhost
+
+- name: create user .my.cnf file with root password credentials
+  template:
+    src: .my.cnf
+    dest: ~/.my.cnf
+    mode: 0600
+  become: false
+
+- name: create root .my.cnf file with root password credentials
+  template:
+    src: .my.cnf
+    dest: /root/.my.cnf
+    mode: 0600

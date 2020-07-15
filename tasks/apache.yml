@@ -95,29 +95,33 @@
   changed_when: false
 
 - name: create cert (Redhat)
-  shell: /etc/ssl/certs/make-dummy-cert {{ wordpress_ssl_cert }} ; chmod 640 {{ wordpress_ssl_cert }} ; chgrp {{ wordpress_users.web }} {{ wordpress_ssl_cert }}
+  shell: "{{ make_dummy_cert_path }} {{ wordpress_ssl_cert }} ; chmod 640 {{ wordpress_ssl_cert }} ; chgrp {{ wordpress_users.web }} {{ wordpress_ssl_cert }}"
   args:
     creates: "{{ wordpress_ssl_cert }}"
   when: ansible_os_family == "RedHat"
   notify: restart apache
 
-# TODO: what are these steps doing? Test ssl keys.
-#
-# - name: create key, part 1 (Redhat)
-#  file:
-#    path: /etc/ssl/private
-#    state: directory
-#    mode: '0710'
-#    owner: root
-#    group: ssl-cert
-#  when: ansible_os_family == "RedHat"
+# This is necessary because the dummy cert also includes the private key, in the same exact file. Thus, the private key is missing.
+- name: create key, part 1 (Redhat)
+  file:
+    path: /etc/ssl/private
+    state: directory
+    mode: '0710'
+    owner: root
+    group: "{{ wordpress_cert_group }}"
+  when: ansible_os_family == "RedHat"
 
-# - name: create key, part2 (Redhat)
-#  shell: cp -p {{ wordpress_ssl_cert }} {{ wordpress_ssl_key }}
-#  args:
-#    creates: "{{ wordpress_ssl_key }}"
-#  when: ansible_os_family == "RedHat"
-#  notify: restart apache
+- name: create key, part2 (Redhat)
+  copy:
+    src: "{{ wordpress_ssl_cert }}"
+    dest: "{{ wordpress_ssl_key }}"
+    remote_src: true
+    force: false
+    mode: preserve
+    owner: root
+    group: "{{ wordpress_cert_group }}"
+  when: ansible_os_family == "RedHat"
+  notify: restart apache
 
 - name: Check that /etc/selinux/config exists
   stat:

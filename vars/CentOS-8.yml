@@ -1,0 +1,18 @@
+---
+default_wordpress_mysql_service: mariadb
+
+default_wordpress_packages_apache:
+  - httpd
+  - php
+  - php-cli
+  - php-mysqlnd
+  - php-process
+  - php-devel
+  - php-gd
+  - php-pecl-apcu
+  - php-pecl-json
+  - php-mbstring
+  - mod_ssl
+  - openssl
+
+make_dummy_cert_path: /usr/bin/make-dummy-cert

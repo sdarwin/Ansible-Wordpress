@@ -6,10 +6,11 @@ default_wordpress_packages_general:
   - git
   - wget
   - gcc
-  - python-passlib
-  - python-pip
-  # - python3-pip
-  - libselinux-python
+
+default_wordpress_python_packages:
+  - python3-pip
+  - python3-setuptools
+  - python3-libselinux
 
 default_wordpress_packages_apache:
   - httpd
@@ -27,10 +28,8 @@ default_wordpress_packages_apache:
 
 default_wordpress_packages_mysql:
   - mariadb-server
-  - python-devel
   - mariadb-devel
   - gcc
-  - MySQL-python
 
 # default_wordpress_packages_email:
 #   - postfix
@@ -42,3 +41,8 @@ default_wordpress_mysql_service: mysqld
 default_wordpress_mysql_path: /etc/my.cnf.d
 
 default_wordpress_apache_service: httpd
+
+default_mysql_socket: /var/lib/mysql/mysql.sock
+default_make_dummy_cert_path: /etc/ssl/certs/make-dummy-cert
+
+default_wordpress_cert_group: apache

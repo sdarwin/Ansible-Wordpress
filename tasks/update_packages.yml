@@ -16,3 +16,13 @@
     state: present
     update_cache: true
   when: ansible_os_family == "RedHat"
+
+- name: install python packages
+  package:
+    name: "{{ wordpress_python_packages }}"
+    state: present
+
+- name: install pip packages
+  pip:
+    name:
+      - passlib
