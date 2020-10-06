@@ -19,6 +19,7 @@
     name:
       - boto
       - boto3
+  changed_when: false
 
 - name: install PyMySQL module
   pip:
@@ -33,6 +34,7 @@
     state: directory
     owner: root
     group: root
+    mode: 0755
 
 - name: add mysql.cnf config
   template:

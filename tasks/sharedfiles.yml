@@ -3,7 +3,7 @@
 # These tasks are aimed at supporting Ansistrano. If that's not used, it should not interfere with anything.
 
 - name: create shared dir
-  file: dest={{ wordpress_deploy_to }}/shared owner={{ wordpress_deploy_user }}  group={{ wordpress_deploy_group }} state=directory
+  file: dest={{ wordpress_deploy_to }}/shared owner={{ wordpress_deploy_user }}  group={{ wordpress_deploy_group }} mode=0755 state=directory
   notify:
     - restart apache
 
@@ -11,3 +11,4 @@
   template:
     src: wp-config.php.j2
     dest: "{{ wordpress_deploy_to }}/shared/wp-config.php"
+    mode: 0644

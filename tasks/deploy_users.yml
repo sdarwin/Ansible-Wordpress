@@ -17,7 +17,7 @@
     validate: 'visudo -cf %s'
 
 - name: create env vars file
-  template: src=wordpress-env-vars.j2 dest=/home/{{ wordpress_deploy_user }}/.wordpress-env-vars
+  template: src=wordpress-env-vars.j2 dest=/home/{{ wordpress_deploy_user }}/.wordpress-env-vars mode=0644
 
 - name: include env vars in .profile
   lineinfile:

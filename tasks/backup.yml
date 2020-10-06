@@ -2,6 +2,7 @@
 - name: install boto
   pip:
     name: boto
+  changed_when: false
 
 - name: get date
   command: date +"%Y_%m_%d_%H_%M_%S"
