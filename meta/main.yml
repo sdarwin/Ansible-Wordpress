@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: wordpress
   author: sdarwin
   description: WordPress
   license: GPLv2
