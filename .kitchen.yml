@@ -42,7 +42,7 @@ platforms:
       username: admin
   - name: centos-7.4
     driver:
-      #image_id: ami-dcad28b8
+      # image_id: ami-dcad28b8
       image_id: ami-04a25c39dc7a8aebb
     transport:
       username: centos
