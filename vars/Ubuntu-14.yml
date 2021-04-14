@@ -24,3 +24,5 @@ default_wordpress_packages_mysql:
 default_wordpress_python_packages:
   - python-pip
   - python-setuptools
+
+wordpress_pip: "pip==20.3.4"

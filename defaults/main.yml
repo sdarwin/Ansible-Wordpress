@@ -50,3 +50,4 @@ wordpress_mysql_cnf_config:
   bind_address: 0.0.0.0
 
 wordpress_create_shared: false
+wordpress_pip: "pip"
